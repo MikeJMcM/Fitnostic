@@ -1,0 +1,22 @@
+{
+    "name": "fitnostic",
+    "description": "Agnostic fitness planning.",
+    "homepage": "",
+    "keywords": [
+        "fitness",
+        "planning",
+        "workout",
+        "routine"
+    ],
+    "author": "Michael McMillan <MichaelJMcMillan@protonmail.com>",
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "main": "fitnostic.ts",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
