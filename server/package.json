@@ -1,5 +1,6 @@
 {
-    "name": "fitnostic",
+    "name": "fitnostic-server",
+    "private":true,
     "description": "Agnostic fitness planning.",
     "keywords": [
         "fitness",
