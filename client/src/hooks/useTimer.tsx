@@ -1,39 +1,33 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const useTimer = (initialState = 0) => {
-  const [timer, setTimer] = useState(initialState)
-  const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const countRef = useRef<number | null>(null)
+    const [timer, setTimer] = useState(initialState)
+    const [isActive, setIsActive] = useState(false)
+    const [isPaused, setIsPaused] = useState(false)
+    const countRef = useRef<number | null>(null)
 
-  const handleStart = () => {
-    setIsActive(true)
-    setIsPaused(true)
-    countRef.current = window.setInterval(() => {
-      setTimer((timer) => timer + 1)
-    }, 1000)
-  }
+    const handleToggle = () => {
+        setIsActive(!isActive);
+    }
 
-  const handlePause = () => {
-    window.clearInterval(countRef.current  || 0)
-    setIsPaused(false)
-  }
+    function reset() {
+        setTimer(0);
+        setIsActive(false);
+      }
 
-  const handleResume = () => {
-    setIsPaused(true)
-    countRef.current = window.setInterval(() => {
-      setTimer((timer) => timer + 1)
-    }, 1000)
-  }
+    useEffect(() => {
+        let interval: number | null = null;
+        if (isActive) {
+          interval = window.setInterval(() => {
+            setTimer(seconds => seconds + 1);
+          }, 1000);
+        } else if (!isActive && timer !== 0) {
+          window.clearInterval(interval || 0);
+        }
+        return () => window.clearInterval(interval || 0);
+      }, [isActive, timer]);
 
-  const handleReset = () => {
-    window.clearInterval(countRef.current || 0)
-    setIsActive(false)
-    setIsPaused(false)
-    setTimer(0)
-  }
-
-  return { timer, isActive, isPaused, handleStart, handlePause, handleResume, handleReset }
+    return { timer, isActive, isPaused, handleToggle, reset }
 }
 
 export default useTimer
