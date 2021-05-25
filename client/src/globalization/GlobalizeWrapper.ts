@@ -1,10 +1,9 @@
 import LocaleProvider from './localeProvider';
 import Globalize from 'globalize';
-import { detectLocale } from './utils';
+import { detectLocale } from '../utils';
 import strings from '../strings/en/strings.json';//TODO dynamically load messages
 import stringsfr from '../strings/fr/strings.json';//TODO dynamically load messages
 import likelySubtags from 'cldr-data/supplemental/likelySubtags.json';
-import plurals from 'cldr-data/supplemental/plurals.json';
 
 const locale = new LocaleProvider(detectLocale());
 locale.onChangeLocale((tag)=> console.log('Locale Changed to', tag));
@@ -23,7 +22,7 @@ class GlobalizeWrapper {
     initGlobalize(): void {
         Globalize.loadMessages(strings);
         Globalize.loadMessages(stringsfr);
-        Globalize.load({
+        Globalize.load({//for some reason it is requiring loading this even though app isnt using plurals
             "supplemental": {
               "version": {
                 "_unicodeVersion": "12.1.0",
