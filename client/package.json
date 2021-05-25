@@ -11,11 +11,17 @@
     "@types/node": "^12.20.13",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
+    "cldr-data": "^36.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "typescript": "^4.2.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "globalize": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/globalize": "^1.5.1",
+    "cldr-data": "^36.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,9 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001",
-  "devDependencies": {
-    "@types/globalize": "^1.5.1",
-    "globalize": "^1.6.0"
-  }
+  "proxy": "http://localhost:3001"
 }

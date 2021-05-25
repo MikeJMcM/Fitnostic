@@ -2,10 +2,14 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Button } from '@material-ui/core';
+import GlobalizeWrapper from './globalization/GlobalizeWrapper';
 
+const wrapper = new GlobalizeWrapper();
 
 function App() {
   const [data, setData] = React.useState(null);
+
+
 
   React.useEffect(() => {
     fetch("/api")
@@ -17,7 +21,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Button color="secondary">Hello World</Button>
+        <Button color="secondary">wrapper.getTitle()</Button>
         <p>{!data ? "Loading..." : data}</p>
       </header>
     </div>
