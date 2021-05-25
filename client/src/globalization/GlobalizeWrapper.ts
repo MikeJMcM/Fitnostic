@@ -1,37 +1,53 @@
 import LocaleProvider from './localeProvider';
 import Globalize from 'globalize';
 import { detectLocale } from './utils';
-import * as strings from '../strings/en/strings.json';//TODO dynamically load messages
-import * as stringsfr from '../strings/en/strings.json';//TODO dynamically load messages
+import strings from '../strings/en/strings.json';//TODO dynamically load messages
+import stringsfr from '../strings/fr/strings.json';//TODO dynamically load messages
+import likelySubtags from 'cldr-data/supplemental/likelySubtags.json';
+import plurals from 'cldr-data/supplemental/plurals.json';
 
 const locale = new LocaleProvider(detectLocale());
 locale.onChangeLocale((tag)=> console.log('Locale Changed to', tag));
-console.log('Detected user locale is', detectLocale());
-locale.setCurrent('fr');
-console.log('Current user locale is', locale.getCurrent());
-//TODO remove this testing code and call setcurrent in app
 
 class GlobalizeWrapper {
 
-    titleFormatter: Function;
-    timerFormatter: Function;
+    title: string;
+    //timerFormatter: Function;
 
     constructor(){
         this.initGlobalize();
-        this.titleFormatter = Globalize.messageFormatter("appTitle");
-        this.timerFormatter = Globalize.dateFormatter({time: 'medium'});
+        this.title = Globalize.formatMessage("appTitle");
+        //this.timerFormatter = Globalize.dateFormatter({time: 'medium'});
     }
 
     initGlobalize(): void {
         Globalize.loadMessages(strings);
         Globalize.loadMessages(stringsfr);
+        Globalize.load({
+            "supplemental": {
+              "version": {
+                "_unicodeVersion": "12.1.0",
+                "_cldrVersion": "36"
+              },
+              "plurals-type-cardinal": {
+                  "fr":{},
+                  "en":{}
+              }
+            }
+        });
+        Globalize.load(likelySubtags);
+        // Globalize.load(plurals);
+        Globalize.locale(locale.getCurrent());
     };
 
     getTitle(): string {
-        return this.titleFormatter();
+        return this.title;
     }
-    getTimeFormatter(): Function {
-        return this.timerFormatter;
+    // getTimeFormatter(): Function {
+    //     return this.timerFormatter;
+    // }
+    setCurrentLocale(localeString:string):void {
+        locale.setCurrent(localeString);
     }
 }
 
