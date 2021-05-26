@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 const useTimer = (initialState = 0) => {
     const [timer, setTimer] = useState(initialState)
     const [isActive, setIsActive] = useState(false)
-    const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef<number | null>(null)
 
     const handleToggle = () => {
@@ -27,7 +26,7 @@ const useTimer = (initialState = 0) => {
         return () => window.clearInterval(interval || 0);
       }, [isActive, timer]);
 
-    return { timer, isActive, isPaused, handleToggle, reset }
+    return { timer, isActive, handleToggle, reset }
 }
 
 export default useTimer

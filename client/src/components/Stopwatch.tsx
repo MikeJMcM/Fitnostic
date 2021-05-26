@@ -4,9 +4,7 @@ import { formatTime } from '../utils';
 import './Stopwatch.css';
 
 const Stopwatch = () => {
-  const { timer, isActive, isPaused, handleToggle, reset } = useTimer(0)
-
-
+  const { timer, isActive, handleToggle, reset } = useTimer(0)
 
   return (
     <div>
@@ -28,7 +26,7 @@ const Stopwatch = () => {
           </div>
         </div>  */}
       </div>
-      <button onClick={reset} disabled={!isActive}>Reset</button>
+      {/* <button onClick={reset} disabled={!isActive}>Reset</button> */}
     </div>
   );
 }

@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Stopwatch from './components/Stopwatch';
+import AutoGrid from './components/AutoGrid';
 import reportWebVitals from './reportWebVitals';
+import {GetGlobalizeWrapperInstance} from './globalization/GlobalizeWrapper';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
+const TITLE = GetGlobalizeWrapperInstance().getMessage("appTitle");
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <Stopwatch />
+    <HelmetProvider>
+      <Helmet>
+        <title>{ TITLE }</title>
+      </Helmet>
+      <AutoGrid />
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

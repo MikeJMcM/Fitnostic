@@ -7,15 +7,21 @@ import likelySubtags from 'cldr-data/supplemental/likelySubtags.json';
 
 const locale = new LocaleProvider(detectLocale());
 locale.onChangeLocale((tag)=> console.log('Locale Changed to', tag));
+//locale.setCurrent('fr');
+
+var instance: GlobalizeWrapper | undefined;
+
+function GetGlobalizeWrapperInstance() {
+    if(!instance || instance === undefined)
+    instance = new GlobalizeWrapper();
+return instance;
+}
 
 class GlobalizeWrapper {
-
-    title: string;
     //timerFormatter: Function;
 
     constructor(){
         this.initGlobalize();
-        this.title = Globalize.formatMessage("appTitle");
         //this.timerFormatter = Globalize.dateFormatter({time: 'medium'});
     }
 
@@ -39,8 +45,8 @@ class GlobalizeWrapper {
         Globalize.locale(locale.getCurrent());
     };
 
-    getTitle(): string {
-        return this.title;
+    getMessage(messageName: string): string {
+        return Globalize.formatMessage(messageName);
     }
     // getTimeFormatter(): Function {
     //     return this.timerFormatter;
@@ -50,4 +56,4 @@ class GlobalizeWrapper {
     }
 }
 
-export default GlobalizeWrapper;
+export { GlobalizeWrapper, GetGlobalizeWrapperInstance };
