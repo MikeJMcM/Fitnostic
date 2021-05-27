@@ -18,8 +18,8 @@ const useTimer = (initialState = 0) => {
         let interval: number | null = null;
         if (isActive) {
           interval = window.setInterval(() => {
-            setTimer(seconds => seconds + 1);
-          }, 1000);
+            setTimer(ms => ms + 100);
+          }, 100);
         } else if (!isActive && timer !== 0) {
           window.clearInterval(interval || 0);
         }

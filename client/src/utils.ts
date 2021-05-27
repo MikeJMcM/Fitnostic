@@ -12,10 +12,14 @@ export function detectLocale() {
     }
   }
 
-  export const formatTime = (timer: number) => {
-    const getSeconds = `0${(timer % 60)}`.slice(-2)
-    const getMinutes = `0${Math.floor(timer / 60)}`.slice(-2)
-    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2)
+  export const formatTime = (milliseconds: number) => {
+    let seconds = milliseconds / 1000;
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
 
-    return `${getHours} : ${getMinutes} : ${getSeconds}`
+    let formatSeconds = `${Math.floor(seconds) % 60}s`;
+    let formatMinutes = minutes > 0 ? `${minutes % 60}m ` : '';
+    let formatHours = hours > 0 ? `${hours}h ` : '';
+
+    return `${formatHours}${formatMinutes}${formatSeconds}`
   }

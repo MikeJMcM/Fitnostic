@@ -35,31 +35,19 @@ function generate(element: React.ReactElement) {
 
 export default function InteractiveList() {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
 
   let globalizeInstance = GetGlobalizeWrapperInstance();
 
   return (
     <div className={classes.root}>
-      <FormGroup row>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={secondary}
-              onChange={(event) => setSecondary(event.target.checked)}
-            />
-          }
-          label="Enable secondary text"
-        />
-      </FormGroup>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={classes.title}>
             {globalizeInstance.getMessage("remainingSets")}
           </Typography>
-          <div className={classes.demo}>
-            <List dense={dense}>
+          <div className={classes.demo} onMouseOver={() => setSecondary(true)} onMouseLeave={() => setSecondary(false)}>
+            <List>
               {generate(
                 <ListItem>
                   <ListItemText
