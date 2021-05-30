@@ -1,6 +1,36 @@
 {
     "en": {
         "appTitle": "Fitnostic",
-        "remainingSets": "Remaining Sets"
+        "remainingSets": "Remaining Sets",
+        "defaultWorkoutPlan": [
+            {
+                "name":"Burpees",
+                "reps":25
+            },
+            {
+                "name":"Bodyweight Squats",
+                "reps":50
+            },
+            {
+                "name":"Pushups",
+                "reps":50
+            },
+            {
+                "name":"Jump Squats",
+                "reps":50
+            },
+            {
+                "name":"V Ups",
+                "reps":50
+            },
+            {
+                "name":"Mountain Climbers",
+                "reps":50
+            },
+            {
+                "name":"Burpees",
+                "reps":25
+            }
+        ]
     }
 }
