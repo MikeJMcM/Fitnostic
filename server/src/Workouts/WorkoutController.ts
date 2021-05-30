@@ -4,7 +4,7 @@
 import express, {Request, Response} from 'express';
 import * as WorkoutService from './WorkoutService';
 import {BaseWorkoutPlan, WorkoutPlan} from './WorkoutModels';
-
+import { checkJwt } from '../middleware/AuthMiddleware';
 /**
  * Router Definition
  */
@@ -40,6 +40,10 @@ workoutController.get("/:id", async (req: Request, res: Response) => {
         res.status(500).send(e.message);
     }
 })
+
+// ✨ New! Mount authorization middleware
+workoutController.use(checkJwt);
+
 // POST items
 workoutController.post("/", async (req: Request, res: Response) => {
     try{
