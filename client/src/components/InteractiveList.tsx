@@ -3,9 +3,6 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { GetGlobalizeWrapperInstance } from './../globalization/GlobalizeWrapper';
@@ -51,8 +48,8 @@ export default function InteractiveList() {
               {generate(
                 <ListItem>
                   <ListItemText
-                    primary="Single-line item"
-                    secondary={secondary ? "Secondary text" : null}
+                    primary="Workout Name eg Burpees"
+                    secondary={secondary ? "# of reps" : null}
                   />
                 </ListItem>
               )}
