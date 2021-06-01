@@ -1,13 +1,11 @@
 import Grid from '@material-ui/core/Grid';
-import React from 'react';
+import { useState } from 'react';
 import Stopwatch from './Stopwatch';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import CurrentItemCheckbox from './CurrentItemCheckbox';
 import InteractiveList from './InteractiveList';
 import {GetGlobalizeWrapperInstance} from '../globalization/GlobalizeWrapper';
-
-const TITLE = GetGlobalizeWrapperInstance().getMessage("appTitle");
+import { useFetch } from '../hooks/useFetch';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +14,14 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function AutoGrid() {
+
+//const [query, setQuery] = useState('');
+//setQuery("plans/");
+//const url = query && `https:localhost:3001/api/plans/${query}`;//todo pass data down to components, how to do this best practice? maybe do this in individual components
+const { status, data } = useFetch("/api/plans/");
+const text = data[0] ?? "";
+console.log(data);
+
 const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -27,7 +33,10 @@ const classes = useStyles();
                   <Stopwatch />
                 </Grid>
                 <Grid item xs>
-                <InteractiveList/>
+                  <InteractiveList/>
+                </Grid>
+                <Grid item xs>
+                  {text.name}
                 </Grid>
             </Grid>
         </div>
