@@ -1,10 +1,9 @@
-import React from 'react';
 import useTimer from '../hooks/useTimer';
 import { formatTime } from '../utils';
 import './Stopwatch.css';
 
-const Stopwatch = () => {
-  const { timer, isActive, handleToggle, reset } = useTimer(0)
+const Stopwatch = ({initialState}: {initialState: number}) => {
+  const { timer, handleToggle, reset } = useTimer(initialState)
 
   return (
     <div>

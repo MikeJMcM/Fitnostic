@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import AutoGrid from './components/AutoGrid';
+import PlanView from './components/PlanView';
 import reportWebVitals from './reportWebVitals';
 import {GetGlobalizeWrapperInstance} from './globalization/GlobalizeWrapper';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -14,7 +14,7 @@ ReactDOM.render(
       <Helmet>
         <title>{ TITLE }</title>
       </Helmet>
-      <AutoGrid />
+      <PlanView />
     </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')

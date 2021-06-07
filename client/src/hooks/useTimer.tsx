@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 const useTimer = (initialState = 0) => {
     const [timer, setTimer] = useState(initialState)
     const [isActive, setIsActive] = useState(false)
-    const countRef = useRef<number | null>(null)
 
     const handleToggle = () => {
         setIsActive(!isActive);

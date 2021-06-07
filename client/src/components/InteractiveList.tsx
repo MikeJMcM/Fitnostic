@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cloneElement, ReactElement, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -6,6 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { GetGlobalizeWrapperInstance } from './../globalization/GlobalizeWrapper';
+import { WorkoutSet } from "../interfaces/WorkoutPlans";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,20 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function generate(element: React.ReactElement) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value
-    })
-  );
+type InteractiveListProps = {
+  sets: WorkoutSet[]
 }
 
-export default function InteractiveList() {
+export default function InteractiveList(props: InteractiveListProps) {
   const classes = useStyles();
-  const [secondary, setSecondary] = React.useState(false);
-
   let globalizeInstance = GetGlobalizeWrapperInstance();
-
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -43,16 +37,13 @@ export default function InteractiveList() {
           <Typography variant="h6" className={classes.title}>
             {globalizeInstance.getMessage("remainingSets")}
           </Typography>
-          <div className={classes.demo} onMouseOver={() => setSecondary(true)} onMouseLeave={() => setSecondary(false)}>
+          <div className={classes.demo}>
             <List>
-              {generate(
-                <ListItem>
-                  <ListItemText
-                    primary="Workout Name eg Burpees"
-                    secondary={secondary ? "# of reps" : null}
-                  />
+              {props.sets.map((set, index) => {
+               return <ListItem key={index}>
+                  <ListItemText primary={set.name} secondary={set.reps} />
                 </ListItem>
-              )}
+              })}
             </List>
           </div>
         </Grid>

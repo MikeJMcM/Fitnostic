@@ -1,6 +1,7 @@
 {
     "en": {
         "appTitle": "Fitnostic",
+        "workoutComplete": "Workout Complete!",
         "remainingSets": "Remaining Sets",
         "defaultWorkoutPlan": [
             {

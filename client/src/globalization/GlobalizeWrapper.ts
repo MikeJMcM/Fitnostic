@@ -1,4 +1,4 @@
-import LocaleProvider from './localeProvider';
+import LocaleProvider from './LocaleProvider';
 import Globalize from 'globalize';
 import { detectLocale } from '../utils';
 import strings from '../strings/en/strings.json';//TODO dynamically load messages
