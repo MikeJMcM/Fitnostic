@@ -10,6 +10,7 @@ export interface WorkoutPlan extends BaseWorkoutPlan{
 export interface WorkoutSet {
     name: string;
     reps: number;
+    done: boolean;
 }
 
 export interface WorkoutPlans {
@@ -20,9 +21,7 @@ export interface WorkoutPlans {
     name: string,
     time: number,
     status: WorkoutStatus,
-    currentSet?: WorkoutSet,
-    remainingSets: WorkoutSet[],
-    completedSets: WorkoutSet[],
+    sets: WorkoutSet[],
     plan: WorkoutPlan
 }
 export enum WorkoutStatus {
@@ -32,9 +31,9 @@ export enum WorkoutStatus {
 }
 
 export enum DispatchType {
-     REQUEST = 'request',
-     SUCCESS = 'success',
-     FAILURE = 'failure',
+     REQUEST = 'REQUEST',
+     SUCCESS = 'SUCCESS',
+     FAILURE = 'FAILURE',
      INITIAL = 'INITIAL',
      FETCH_PLAN = 'FETCH_PLAN',
      NEXT_SET = 'NEXT_SET',

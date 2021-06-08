@@ -39,7 +39,7 @@ export default function InteractiveList(props: InteractiveListProps) {
           </Typography>
           <div className={classes.demo}>
             <List>
-              {props.sets.map((set, index) => {
+              {props.sets.filter(set => !set.done).map((set, index) => {
                return <ListItem key={index}>
                   <ListItemText primary={set.name} secondary={set.reps} />
                 </ListItem>

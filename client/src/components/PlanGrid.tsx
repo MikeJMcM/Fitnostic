@@ -22,27 +22,7 @@ type PlanGridProps = {
 export default function PlanGrid() {
 const classes = useStyles();
 const [planId, setPlanId] = useState<number>(1);
-const [currentSet, setCurrentSet] = useState<WorkoutSet>();
-const [currentTime, setCurrentTime] = useState<number>();
-const [remainingSets, setremainingSets] = useState<WorkoutSet[]>();
-const { state ,dispatch } = useContext(PlanContext);
-
-// useEffect(() => {
-//   let ignore = false;
- 
-//   dispatch({ type: 'request' });
-//   fetch(`/api/plans/${planId}`)
-//   .then((results) => {
-//     console.log(results); 
-//     if (!ignore) 
-//       dispatch({ type: 'success', results: results.json() }); 
-//   },
-//   (error) => 
-//   dispatch({ type: 'failure', error }),
-//   )
- 
-//   return () => { ignore = true; }
-//   }, [planId]);
+const { state , dispatch } = useContext(PlanContext);
 
 //example dispatch call
 const fetchPlan = async () => {
@@ -51,8 +31,6 @@ const fetchPlan = async () => {
   try{
     const response = await fetch(`/api/plans/${planId}`);
     const data = await response.json();
-    console.log(planId);
-    console.log(data);
     dispatch({ type: DispatchType.SUCCESS, results: data }); 
     console.log(state);
   } catch (e) {
@@ -60,24 +38,46 @@ const fetchPlan = async () => {
   }
   return () => { ignore = true; }
 };
-  //either State.data? can be left as optional 
-  //OR
-  //use useStates with handlefunctions that call sets to update the values once fetchs are done (or on future change state functions)
-  //currently trying 2nd approach using https://codesandbox.io/s/context-reducer-ts-9ctis?file=/src/List.tsx
+
+const nextWorkoutSet = async () => {
+  let ignore = false;
+  try{
+    dispatch({ type: DispatchType.NEXT_SET }); 
+    console.log(state);
+  } catch (e) {
+    dispatch({ type: DispatchType.FAILURE, error: e })
+  }
+  return () => { ignore = true; }
+};
+
+const prevWorkoutSet = async () => {
+  let ignore = false;
+  try{
+    dispatch({ type: DispatchType.PREV_SET }); 
+    console.log(state);
+  } catch (e) {
+    dispatch({ type: DispatchType.FAILURE, error: e })
+  }
+  return () => { ignore = true; }
+};
+
+//TODO replace props with context (should I?)
   return (
       <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs>
-                  <CurrentItemCheckbox currentSet={state.data.currentSet}/>
+                  <CurrentItemCheckbox currentSet={state.data.sets[0]}/>
                 </Grid>
                 <Grid item xs>
                   <Stopwatch initialState={state.data.time}/>
                 </Grid>
                 <Grid item xs>
-                  <InteractiveList sets={state.data.remainingSets}/>
+                  <InteractiveList sets={state.data.sets}/>
                 </Grid>
             </Grid>
-            <Button variant="contained" onClick= {() => { fetchPlan() }}>Default</Button>
+            <Button variant="contained" onClick= {() => { fetchPlan() }}>Test load plan 1</Button>
+            <Button variant="contained" onClick= {() => { nextWorkoutSet() }}>set bottom set to Done</Button>
+            <Button variant="contained" onClick= {() => { prevWorkoutSet() }}>set top set to not Done</Button>
         </div>
     )
 }
