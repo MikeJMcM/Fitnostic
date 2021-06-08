@@ -24,37 +24,13 @@ const classes = useStyles();
 const [planId, setPlanId] = useState<number>(1);
 const { state , dispatch } = useContext(PlanContext);
 
-//example dispatch call
 const fetchPlan = async () => {
   let ignore = false;
   dispatch({type: DispatchType.REQUEST});
   try{
     const response = await fetch(`/api/plans/${planId}`);
     const data = await response.json();
-    dispatch({ type: DispatchType.SUCCESS, results: data }); 
-    console.log(state);
-  } catch (e) {
-    dispatch({ type: DispatchType.FAILURE, error: e })
-  }
-  return () => { ignore = true; }
-};
-
-const nextWorkoutSet = async () => {
-  let ignore = false;
-  try{
-    dispatch({ type: DispatchType.NEXT_SET }); 
-    console.log(state);
-  } catch (e) {
-    dispatch({ type: DispatchType.FAILURE, error: e })
-  }
-  return () => { ignore = true; }
-};
-
-const prevWorkoutSet = async () => {
-  let ignore = false;
-  try{
-    dispatch({ type: DispatchType.PREV_SET }); 
-    console.log(state);
+    dispatch({ type: DispatchType.SUCCESS, results: data });
   } catch (e) {
     dispatch({ type: DispatchType.FAILURE, error: e })
   }
@@ -66,7 +42,7 @@ const prevWorkoutSet = async () => {
       <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs>
-                  <CurrentItemCheckbox currentSet={state.data.sets[0]}/>
+                  <CurrentItemCheckbox currentSet={state.data.sets[state.data.currentSetIndex]}/>
                 </Grid>
                 <Grid item xs>
                   <Stopwatch initialState={state.data.time}/>
@@ -76,8 +52,6 @@ const prevWorkoutSet = async () => {
                 </Grid>
             </Grid>
             <Button variant="contained" onClick= {() => { fetchPlan() }}>Test load plan 1</Button>
-            <Button variant="contained" onClick= {() => { nextWorkoutSet() }}>set bottom set to Done</Button>
-            <Button variant="contained" onClick= {() => { prevWorkoutSet() }}>set top set to not Done</Button>
         </div>
     )
 }

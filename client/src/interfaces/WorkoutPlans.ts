@@ -20,6 +20,7 @@ export interface WorkoutPlans {
   export interface ClientSideWorkoutPlan {
     name: string,
     time: number,
+    currentSetIndex: number,
     status: WorkoutStatus,
     sets: WorkoutSet[],
     plan: WorkoutPlan

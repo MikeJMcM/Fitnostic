@@ -11,6 +11,7 @@ const initialPlan: WorkoutPlan = {
 const initialState: ClientSideWorkoutPlan = {
     name: initialPlan.name,
     time: 0,
+    currentSetIndex: 0,
     status: WorkoutStatus.Paused,
     sets: initialPlan.sets,
     plan: initialPlan
@@ -38,15 +39,18 @@ function fetchPlanReducer(state: State, action: Action): State {
             return { isLoading: true, data: {plan: action.results, 
                                             name: action.results.name, 
                                             time: 0, 
+                                            currentSetIndex: 0,
                                             status: WorkoutStatus.Paused, 
                                             sets: action.results.sets}};
         case DispatchType.FAILURE:
             return { isLoading: true, data: { ...state.data }, error: action.error };
         case DispatchType.NEXT_SET:
-            if(state.data.sets.every(x => x.done))
-                return { isLoading: true, data: { ...state.data } };
-            const nextSetToMarkAsDoneIndex = state.data.sets.findIndex(x => !x.done);
+            console.log(state);
+            if(state.data.sets.every(x => x.done)) return { isLoading: true, data: { ...state.data } };
+                            
+            const nextSetToMarkAsDoneIndex = state.data.sets.findIndex(set => !set.done);
             state.data.plan.sets[nextSetToMarkAsDoneIndex].done = true;
+            state.data.currentSetIndex = nextSetToMarkAsDoneIndex + 1;
             return { isLoading: true, data: {...state.data}};
         case DispatchType.PREV_SET:
             if(state.data.sets.every(x => !x.done))
