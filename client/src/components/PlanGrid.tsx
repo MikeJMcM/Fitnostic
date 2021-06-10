@@ -1,26 +1,14 @@
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Stopwatch from './Stopwatch';
-import { makeStyles } from '@material-ui/core/styles';
-import CurrentItemCheckbox from './CurrentItemCheckbox';
+import CurrentSetCheckbox from './CurrentSetCheckbox';
 import InteractiveList from './InteractiveList';
 import { ClientSideWorkoutPlan, DispatchType, WorkoutSet } from '../interfaces/WorkoutPlans';
 import { useContext, useEffect, useState } from 'react';
 import { PlanContext } from '../context/PlanContext';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    }
-  }));
-
-type PlanGridProps = {
-  plan: ClientSideWorkoutPlan,
-  status: string
-}
+import PlanMenu from './PlanMenu';
 
 export default function PlanGrid() {
-const classes = useStyles();
 const [planId, setPlanId] = useState<number>(1);
 const { state , dispatch } = useContext(PlanContext);
 
@@ -39,10 +27,11 @@ const fetchPlan = async () => {
 
 //TODO replace props with context (should I?)
   return (
-      <div className={classes.root}>
+      <div>
+        <PlanMenu/>
             <Grid container spacing={3}>
                 <Grid item xs>
-                  <CurrentItemCheckbox currentSet={state.data.sets[state.data.currentSetIndex]}/>
+                  <CurrentSetCheckbox currentSet={state.data.sets[state.data.currentSetIndex]}/>
                 </Grid>
                 <Grid item xs>
                   <Stopwatch initialState={state.data.time}/>
