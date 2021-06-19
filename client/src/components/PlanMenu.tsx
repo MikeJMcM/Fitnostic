@@ -3,7 +3,8 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const placeHolderMenuItems = ["Profile","Save","Login"]
+const placeHolderMenuItems = ["Profile","Save","Logout"];
+const placeHolderLoggedOutMenuItems = ["Register","Save", "Login"];
 
 export default function PlanMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -15,11 +16,31 @@ export default function PlanMenu() {
     setAnchorEl(null);
   };
 
+  function OpenProfilePopup() {
+
+  }
+
+  function SaveCurrentPlan() {
+
+  }
+
+  function OpenLoginPopup() {
+
+  }
+
+  function Logout() {
+
+  }
+
+  function OpenRegisterPopup() {
+    
+  }
+
   return (
     <div>
       <Button
-        id="demo-positioned-button"
-        aria-controls="demo-positioned-menu"
+        id="menu-button"
+        aria-controls="plan-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={(e: any) => handleClick(e)}
@@ -27,8 +48,8 @@ export default function PlanMenu() {
         Dashboard
       </Button>
       <Menu
-        id="demo-positioned-menu"
-        aria-labelledby="demo-positioned-button"
+        id="plan-menu"
+        aria-labelledby="menu-button"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

@@ -7,7 +7,8 @@ import { PlanContext } from "../context/PlanContext";
 
 
 type CurrentSetCheckboxProps = {
-  currentSet: WorkoutSet | undefined
+  currentSet: WorkoutSet | undefined,
+  currentTime: number
 }
 
 const workoutCompleteText = GetGlobalizeWrapperInstance().getMessage("workoutComplete") ?? "Workout Complete";
@@ -19,7 +20,7 @@ export default function CurrentSetCheckbox(props:CurrentSetCheckboxProps) {
   const nextWorkoutSet = async () => {
     let ignore = false;
     try{
-      dispatch({ type: DispatchType.NEXT_SET }); 
+      dispatch({ type: DispatchType.NEXT_SET, currentTime: props.currentTime}); 
     } catch (e) {
       dispatch({ type: DispatchType.FAILURE, error: e })
     }

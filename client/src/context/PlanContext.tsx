@@ -6,7 +6,8 @@ import { findLastIndex } from '../utils'
 const initialPlan: WorkoutPlan = {
     "id":1,
     "name":"HIIT 300",
-    "sets":[{"name":"Burpees","reps":25, "done": false},{"name":"Bodyweight Squats","reps":50, "done": false},{"name":"Pushups","reps":50, "done": false},{"name":"Jump Squats","reps":50, "done": false},{"name":"V Ups","reps":50, "done": false},{"name":"Mountain Climbers","reps":50, "done": false},{"name":"Burpees","reps":25, "done": false}]
+    "completionTime":0,
+    "sets":[{"name":"Burpees","reps":25, "done": false, "doneTime":0},{"name":"Bodyweight Squats","reps":50, "done": false, "doneTime":0},{"name":"Pushups","reps":50, "done": false, "doneTime":0},{"name":"Jump Squats","reps":50, "done": false, "doneTime":0},{"name":"V Ups","reps":50, "done": false, "doneTime":0},{"name":"Mountain Climbers","reps":50, "done": false, "doneTime":0},{"name":"Burpees","reps":25, "done": false, "doneTime":0}]
 }
 const initialState: ClientSideWorkoutPlan = {
     name: initialPlan.name,
@@ -27,7 +28,7 @@ type Action =
    | { type: 'REQUEST' }
    | { type: 'SUCCESS', results: WorkoutPlan} 
    | { type: 'FAILURE', error:string }
-   | { type: 'NEXT_SET' }
+   | { type: 'NEXT_SET', currentTime: number }
    | { type: 'PREV_SET' };
 
 //TODO dont load new plan in SUCCESS if there is unsaved changes, for now just overwrite
@@ -45,13 +46,12 @@ function fetchPlanReducer(state: State, action: Action): State {
         case DispatchType.FAILURE:
             return { isLoading: true, data: { ...state.data }, error: action.error };
         case DispatchType.NEXT_SET:
-            console.log(state);
-            if(state.data.sets.every(x => x.done)) return { isLoading: true, data: { ...state.data } };
-                            
+            if(state.data.sets.every(x => x.done)) return { isLoading: true, data: { ...state.data } };    
             const nextSetToMarkAsDoneIndex = state.data.sets.findIndex(set => !set.done);
             state.data.plan.sets[nextSetToMarkAsDoneIndex].done = true;
+            state.data.plan.sets[nextSetToMarkAsDoneIndex].doneTime = action.currentTime;
             state.data.currentSetIndex = nextSetToMarkAsDoneIndex + 1;
-            return { isLoading: true, data: {...state.data}};
+            return { isLoading: true, data: {...state.data, time: action.currentTime}};
         case DispatchType.PREV_SET:
             if(state.data.sets.every(x => !x.done))
                 return { isLoading: true, data: { ...state.data } };

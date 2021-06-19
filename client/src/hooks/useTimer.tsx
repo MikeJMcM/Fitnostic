@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const useTimer = (initialState = 0) => {
     const [timer, setTimer] = useState(initialState)
@@ -10,6 +10,10 @@ const useTimer = (initialState = 0) => {
 
     function reset() {
         setTimer(0);
+        setIsActive(false);
+      }
+
+      function pause() {
         setIsActive(false);
       }
 
@@ -25,7 +29,7 @@ const useTimer = (initialState = 0) => {
         return () => window.clearInterval(interval || 0);
       }, [isActive, timer]);
 
-    return { timer, isActive, handleToggle, reset }
+    return { timer, setTimer, isActive, handleToggle, reset, pause }
 }
 
 export default useTimer

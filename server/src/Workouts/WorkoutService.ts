@@ -7,10 +7,53 @@ import { WorkoutPlan, BaseWorkoutPlan, WorkoutPlans } from "./WorkoutModels";
 
 
 /**
- * In-Memory Store //temp for testing before setting up mongodb
+ * In-Memory Store //temp for testing before setting up mongodb TODO REMOVE
  */
 let workoutPlans: WorkoutPlans = {
-    1: {id: 1, name: "HIIT 300", sets: [{name: "Burpees", reps: 25}]}
+  1: {id: 1, name: "HIIT 300", completionTime:0, sets: [
+      {
+          "name":"Burpees",
+          "reps":25,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"Bodyweight Squats",
+          "reps":50,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"Pushups",
+          "reps":50,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"Jump Squats",
+          "reps":50,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"V Ups",
+          "reps":50,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"Mountain Climbers",
+          "reps":50,
+          "done":false,
+          "doneTime":0
+      },
+      {
+          "name":"Burpees",
+          "reps":25,
+          "done":false,
+          "doneTime":0
+      }
+  ]}
 };
 
 /**
