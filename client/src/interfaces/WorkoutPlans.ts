@@ -41,5 +41,6 @@ export enum DispatchType {
      FETCH_PLAN = 'FETCH_PLAN',
      NEXT_SET = 'NEXT_SET',
      PREV_SET = 'PREV_SET',
-     UPDATE_TIME = 'UPDATE_TIME'
+     UPDATE_TIME = 'UPDATE_TIME',
+     SET_STATUS = 'SET_STATUS'
 }

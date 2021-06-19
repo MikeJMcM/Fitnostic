@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { DispatchType, WorkoutSet } from "../interfaces/WorkoutPlans";
+import { DispatchType, WorkoutSet, WorkoutStatus } from "../interfaces/WorkoutPlans";
 import { GetGlobalizeWrapperInstance } from "../globalization/GlobalizeWrapper";
 import { PlanContext } from "../context/PlanContext";
 
@@ -18,9 +18,13 @@ export default function CurrentSetCheckbox(props:CurrentSetCheckboxProps) {
   const { state , dispatch } = useContext(PlanContext);
 
   const nextWorkoutSet = async () => {
+    console.log('Next workout set');
     let ignore = false;
     try{
       dispatch({ type: DispatchType.NEXT_SET, currentTime: props.currentTime}); 
+      if(state.data.sets[state.data.sets.length-1] === props.currentSet) {
+        dispatch({type: DispatchType.SET_STATUS, status: WorkoutStatus.Done});
+      }
     } catch (e) {
       dispatch({ type: DispatchType.FAILURE, error: e })
     }

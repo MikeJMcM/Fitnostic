@@ -29,7 +29,8 @@ type Action =
    | { type: 'SUCCESS', results: WorkoutPlan} 
    | { type: 'FAILURE', error:string }
    | { type: 'NEXT_SET', currentTime: number }
-   | { type: 'PREV_SET' };
+   | { type: 'PREV_SET' }
+   | { type: 'SET_STATUS', status: WorkoutStatus};
 
 //TODO dont load new plan in SUCCESS if there is unsaved changes, for now just overwrite
 function fetchPlanReducer(state: State, action: Action): State {
@@ -47,17 +48,20 @@ function fetchPlanReducer(state: State, action: Action): State {
             return { isLoading: true, data: { ...state.data }, error: action.error };
         case DispatchType.NEXT_SET:
             if(state.data.sets.every(x => x.done)) return { isLoading: true, data: { ...state.data } };    
+
             const nextSetToMarkAsDoneIndex = state.data.sets.findIndex(set => !set.done);
             state.data.plan.sets[nextSetToMarkAsDoneIndex].done = true;
             state.data.plan.sets[nextSetToMarkAsDoneIndex].doneTime = action.currentTime;
             state.data.currentSetIndex = nextSetToMarkAsDoneIndex + 1;
             return { isLoading: true, data: {...state.data, time: action.currentTime}};
         case DispatchType.PREV_SET:
-            if(state.data.sets.every(x => !x.done))
-                return { isLoading: true, data: { ...state.data } };
+            if(state.data.sets.every(x => !x.done)) return { isLoading: true, data: { ...state.data } };
+
             const nextSetToMarkAsNotDoneIndex = findLastIndex(state.data.sets, x => x.done);
             state.data.plan.sets[nextSetToMarkAsNotDoneIndex].done = false;
             return { isLoading: true, data: {...state.data}};
+            case DispatchType.SET_STATUS:
+            return { isLoading: true, data: {...state.data, status: action.status }};
         default:
             return state;
     }

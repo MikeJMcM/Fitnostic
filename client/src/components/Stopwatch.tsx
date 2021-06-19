@@ -1,4 +1,5 @@
-import { MouseEventHandler, useContext } from 'react';
+import { MouseEventHandler } from 'react';
+import useTimer from '../hooks/useTimer';
 import './Stopwatch.css';
 
 type StopwatchProps = {
@@ -9,6 +10,8 @@ type StopwatchProps = {
 const Stopwatch = (props: StopwatchProps) => {
   
   const formatTime = (milliseconds: number) => {
+    if(milliseconds % 1000 == 0) console.log(milliseconds);
+    
     let seconds = milliseconds / 1000;
     let minutes = Math.floor(seconds / 60);
     let hours = Math.floor(minutes / 60);

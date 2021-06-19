@@ -3,14 +3,14 @@ import Button from '@material-ui/core/Button';
 import Stopwatch from './Stopwatch';
 import CurrentSetCheckbox from './CurrentSetCheckbox';
 import InteractiveList from './InteractiveList';
-import { DispatchType } from '../interfaces/WorkoutPlans';
+import { DispatchType, WorkoutStatus } from '../interfaces/WorkoutPlans';
 import { useContext, useState } from 'react';
 import { PlanContext } from '../context/PlanContext';
 import PlanMenu from './PlanMenu';
 import useTimer from '../hooks/useTimer';
 
 export default function PlanGrid() {
-const { timer, setTimer, handleToggle, reset, pause } = useTimer(0);
+  const { timer, setTimer, setIsActive, handleToggle, reset } = useTimer({initialState:0, isActive:false});
 const [planId, setPlanId] = useState<number>(1);
 const { state , dispatch } = useContext(PlanContext);
 
@@ -20,9 +20,11 @@ const fetchPlan = async () => {
   try{
     const response = await fetch(`/api/plans/${planId}`);
     const data = await response.json();
-    pause();
-    setTimer(data.completionTime);
+
+    setTimer(0);
+    dispatch({type: DispatchType.SET_STATUS, status: WorkoutStatus.Paused});
     dispatch({ type: DispatchType.SUCCESS, results: data });
+
   } catch (e) {
     dispatch({ type: DispatchType.FAILURE, error: e })
   }
