@@ -14,21 +14,18 @@ const useTimer = (props:TimerProps) => {
     const { state , dispatch } = useContext(PlanContext);
 
     const handleToggle = () => {
-        let newStatus = (state.data.status === WorkoutStatus.Paused ? WorkoutStatus.Started : WorkoutStatus.Paused);
-        setIsActive(newStatus === WorkoutStatus.Paused ? false : true);
-        dispatch( {type: DispatchType.SET_STATUS, status: newStatus} );
+        dispatch( {type: DispatchType.SET_STATUS, status: WorkoutStatus.InProgress} );
+        setIsActive(!isActive);
     }
 
     function reset() {
         setTimer(0);
         setIsActive(false);
-        dispatch( {type: DispatchType.SET_STATUS, status:WorkoutStatus.Paused} );
     }
 
     useEffect(() => {
       const pause = () => {
         setIsActive(false);
-        dispatch( {type: DispatchType.SET_STATUS, status:WorkoutStatus.Paused} );
       }
 
         let interval: number | null = null;

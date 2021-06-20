@@ -13,7 +13,7 @@ const initialState: ClientSideWorkoutPlan = {
     name: initialPlan.name,
     time: 0,
     currentSetIndex: 0,
-    status: WorkoutStatus.Paused,
+    status: WorkoutStatus.PreStart,
     sets: initialPlan.sets,
     plan: initialPlan
 }
@@ -40,9 +40,9 @@ function fetchPlanReducer(state: State, action: Action): State {
         case DispatchType.SUCCESS:
             return { isLoading: true, data: {plan: action.results, 
                                             name: action.results.name, 
-                                            time: 0, 
+                                            time: action.results.completionTime,
                                             currentSetIndex: 0,
-                                            status: WorkoutStatus.Paused, 
+                                            status: WorkoutStatus.PreStart, 
                                             sets: action.results.sets}};
         case DispatchType.FAILURE:
             return { isLoading: true, data: { ...state.data }, error: action.error };

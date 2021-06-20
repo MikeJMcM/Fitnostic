@@ -28,8 +28,8 @@ export interface WorkoutPlans {
     plan: WorkoutPlan
 }
 export enum WorkoutStatus {
-    Paused,
-    Started,
+    PreStart,
+    InProgress,
     Done
 }
 
